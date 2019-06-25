@@ -9,6 +9,10 @@ var Game = (function () {
             _this.ctx.fillStyle = "black";
             _this.ctx.fillRect(0, 0, _this.width, _this.height);
             _this.player.update();
+            _this.player2.update();
+            if (_this.collision(_this.player, _this.player2)) {
+                console.log("Collision detected");
+            }
             _this.ctx.stroke();
             requestAnimationFrame(_this.gameLoop);
         };
@@ -16,10 +20,11 @@ var Game = (function () {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.player = new Player(600, this.height, this);
+        this.player2 = new Player(555, this.height - 80, this);
         requestAnimationFrame(this.gameLoop);
     }
     Game.prototype.collision = function (object, target) {
-        if (object.x > target.x + 60 - object.width && object.x < target.x + target.width - 10 && object.y > target.y - object.height && object.y < target.y + target.height) {
+        if (object.x > target.x - object.width && object.x < target.x + target.width && object.y > target.y - object.height && object.y < target.y + target.height) {
             return true;
         }
         else {
